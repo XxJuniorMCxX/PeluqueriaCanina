@@ -35,5 +35,9 @@ public class Controladora {
     public List<Mascota> traerMascotas() {
         return controladoraPersistencia.traerMascotas();
    }
+
+    public void borrarMascota(int num_cliente) {
+        controladoraPersistencia.borrarMascota(num_cliente);
+    }
     
 }
