@@ -62,11 +62,13 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                                   <Component id="cmdLimpiar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                                   <Component id="cmdGuardar" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                                  <Component id="cmdRetornar" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="277" max="32767" attributes="0"/>
+                          <EmptySpace pref="163" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -171,6 +173,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="cmdLimpiar" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="cmdGuardar" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                      <Component id="cmdRetornar" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
@@ -248,9 +251,10 @@
         <Component class="javax.swing.JComboBox" name="cbxAtencion">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="Si"/>
-                <StringItem index="1" value="No"/>
+              <StringArray count="3">
+                <StringItem index="0" value="-"/>
+                <StringItem index="1" value="Si"/>
+                <StringItem index="2" value="No"/>
               </StringArray>
             </Property>
           </Properties>
@@ -264,9 +268,10 @@
         <Component class="javax.swing.JComboBox" name="cbxAlergico">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="Si"/>
-                <StringItem index="1" value="No"/>
+              <StringArray count="3">
+                <StringItem index="0" value="-"/>
+                <StringItem index="1" value="Si"/>
+                <StringItem index="2" value="No"/>
               </StringArray>
             </Property>
           </Properties>
@@ -308,6 +313,14 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="cmdRetornar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Retornar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdRetornarActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

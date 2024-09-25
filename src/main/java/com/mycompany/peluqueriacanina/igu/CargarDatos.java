@@ -5,13 +5,16 @@
 package com.mycompany.peluqueriacanina.igu;
 
 import com.mycompany.peluqueriacanina.logica.Controladora;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author DREP
  */
 public class CargarDatos extends javax.swing.JFrame {
+
     Controladora controladora = new Controladora();
+    public static PeluqueriaPrincipal retornarPrincipal = new PeluqueriaPrincipal();
     /**
      * Creates new form CargarDatos
      */
@@ -50,6 +53,7 @@ public class CargarDatos extends javax.swing.JFrame {
         cmdGuardar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtArea = new javax.swing.JTextArea();
+        cmdRetornar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,14 +80,14 @@ public class CargarDatos extends javax.swing.JFrame {
 
         jLabel10.setText("Nombre Dueño");
 
-        cbxAtencion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Si", "No" }));
+        cbxAtencion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Si", "No" }));
         cbxAtencion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxAtencionActionPerformed(evt);
             }
         });
 
-        cbxAlergico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Si", "No" }));
+        cbxAlergico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Si", "No" }));
 
         cmdLimpiar.setIcon(new javax.swing.ImageIcon("C:\\Users\\DREP\\Documents\\NetBeansProjects\\PeluqueriaCanina\\recursos\\img\\limpiar.jpg")); // NOI18N
         cmdLimpiar.setText("Limpiar");
@@ -103,6 +107,13 @@ public class CargarDatos extends javax.swing.JFrame {
         txtArea.setColumns(20);
         txtArea.setRows(5);
         jScrollPane1.setViewportView(txtArea);
+
+        cmdRetornar.setText("Retornar");
+        cmdRetornar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdRetornarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,9 +135,11 @@ public class CargarDatos extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(84, 84, 84)
                                 .addComponent(cmdLimpiar)
-                                .addGap(86, 86, 86)
-                                .addComponent(cmdGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(277, Short.MAX_VALUE))
+                                .addGap(54, 54, 54)
+                                .addComponent(cmdGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)
+                                .addComponent(cmdRetornar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(163, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -206,7 +219,8 @@ public class CargarDatos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmdGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmdGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmdRetornar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
 
@@ -239,39 +253,47 @@ public class CargarDatos extends javax.swing.JFrame {
 
     private void cmdGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdGuardarActionPerformed
         // TODO add your handling code here:
-        String nombreMascota= txtNombre.getText();
+        String nombreMascota = txtNombre.getText();
         String raza = txtRaza.getText();
         String color = txtColor.getText();
-        String observaciones=txtArea.getText();
-        String nombreDuenio= txtNombreDuenio.getText();
+        String observaciones = txtArea.getText();
+        String nombreDuenio = txtNombreDuenio.getText();
         String celDuenio = txtTelefono.getText();
-        String alergico = (String)cbxAlergico.getSelectedItem();
+        String alergico = (String) cbxAlergico.getSelectedItem();
         String atencion = (String) cbxAlergico.getSelectedItem();
-        
-        
-        control.guardar();
+
+        controladora.guardar(nombreMascota, raza, color, observaciones, nombreDuenio, celDuenio, alergico, atencion);
+        JOptionPane.showMessageDialog(null, "Se Guardó Con Éxito", "Guardar", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_cmdGuardarActionPerformed
-    public void limpiar(){
-    txtNombre.setText("");
-    txtRaza.setText("");
-    txtColor.setText("");
-    cbxAlergico.setSelectedIndex(0);
-    cbxAtencion.setSelectedIndex(0);
-    txtNombreDuenio.setText("");
-    txtTelefono.setText("");
-    txtArea.setText("");
-    txtNombre.requestFocus();
+
+    private void cmdRetornarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdRetornarActionPerformed
+        retornarPrincipal.setVisible(true);
+        retornarPrincipal.setLocationRelativeTo(null);
+        this.dispose();
+        
+    }//GEN-LAST:event_cmdRetornarActionPerformed
+    public void limpiar() {
+        txtNombre.setText("");
+        txtRaza.setText("");
+        txtColor.setText("");
+        cbxAlergico.setSelectedIndex(0);
+        cbxAtencion.setSelectedIndex(0);
+        txtNombreDuenio.setText("");
+        txtTelefono.setText("");
+        txtArea.setText("");
+        txtNombre.requestFocus();
     }
     /**
      * @param args the command line arguments
      */
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxAlergico;
     private javax.swing.JComboBox<String> cbxAtencion;
     private javax.swing.JButton cmdGuardar;
     private javax.swing.JButton cmdLimpiar;
+    private javax.swing.JButton cmdRetornar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
