@@ -5,21 +5,29 @@
 package com.mycompany.peluqueriacanina.igu;
 
 import com.mycompany.peluqueriacanina.logica.Controladora;
+import com.mycompany.peluqueriacanina.logica.Mascota;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author DREP
  */
-public class CargarDatos extends javax.swing.JFrame {
+public class ModificarDatos extends javax.swing.JFrame {
 
-    Controladora controladora = new Controladora();
+    Controladora controladora = null;
     public static PeluqueriaPrincipal retornarPrincipal = new PeluqueriaPrincipal();
+    public static Mascota mascota;
+
     /**
      * Creates new form CargarDatos
+     *
+     * @param num_cliente
      */
-    public CargarDatos() {
+    public ModificarDatos(int num_cliente) {
+        controladora = new Controladora();
         initComponents();
+        cargarDatos(num_cliente);
     }
 
     /**
@@ -97,7 +105,7 @@ public class CargarDatos extends javax.swing.JFrame {
             }
         });
 
-        cmdGuardar.setText("Guardar");
+        cmdGuardar.setText("Guardar Cambios");
         cmdGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdGuardarActionPerformed(evt);
@@ -135,9 +143,9 @@ public class CargarDatos extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(84, 84, 84)
                                 .addComponent(cmdLimpiar)
-                                .addGap(54, 54, 54)
-                                .addComponent(cmdGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(46, 46, 46)
+                                .addGap(41, 41, 41)
+                                .addComponent(cmdGuardar)
+                                .addGap(37, 37, 37)
                                 .addComponent(cmdRetornar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(163, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -252,25 +260,34 @@ public class CargarDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_cmdLimpiarActionPerformed
 
     private void cmdGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdGuardarActionPerformed
-        // TODO add your handling code here:
+        //Datos Mascota
         String nombreMascota = txtNombre.getText();
         String raza = txtRaza.getText();
         String color = txtColor.getText();
         String observaciones = txtArea.getText();
         String nombreDuenio = txtNombreDuenio.getText();
+
+        //Datos Cliente(Dueño)
         String celDuenio = txtTelefono.getText();
         String alergico = (String) cbxAlergico.getSelectedItem();
         String atencion = (String) cbxAtencion.getSelectedItem();
 
-        controladora.guardar(nombreMascota, raza, color, observaciones, nombreDuenio, celDuenio, alergico, atencion);
-        JOptionPane.showMessageDialog(null, "Se Guardó Con Éxito", "Guardar", JOptionPane.INFORMATION_MESSAGE);
+        //Modificar 2 Tablas Diferentes
+        controladora.modificarMascota(mascota, nombreMascota, raza, color, observaciones, nombreDuenio, celDuenio, alergico, atencion);
+        //Mensaje de Todo Salio Bien
+        mostrarMensaje("Edicion Realizada Con Exito", "info", "Editar Datos");
+        this.dispose();
+        VerDatos verDatos = new VerDatos();
+        verDatos.setVisible(true);
+        verDatos.setLocationRelativeTo(null);
+        verDatos.cargarTabla();
     }//GEN-LAST:event_cmdGuardarActionPerformed
 
     private void cmdRetornarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdRetornarActionPerformed
         retornarPrincipal.setVisible(true);
         retornarPrincipal.setLocationRelativeTo(null);
         this.dispose();
-        
+
     }//GEN-LAST:event_cmdRetornarActionPerformed
     public void limpiar() {
         txtNombre.setText("");
@@ -313,4 +330,43 @@ public class CargarDatos extends javax.swing.JFrame {
     private javax.swing.JTextField txtRaza;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarDatos(int num_cliente) {
+
+        this.mascota = controladora.traerMascota(num_cliente);
+        txtNombre.setText(mascota.getNombre());
+        txtRaza.setText(mascota.getRaza());
+        txtColor.setText(mascota.getColor());
+        txtNombreDuenio.setText(mascota.getDuenio().getNombre());
+        txtTelefono.setText(mascota.getDuenio().getCelDuenio());
+        txtArea.setText(mascota.getObservaciones());
+
+        if (mascota.getAlergico().equalsIgnoreCase("SI")) {
+            cbxAlergico.setSelectedIndex(1);
+        } else {
+            if (mascota.getAlergico().equalsIgnoreCase("NO")) {
+                cbxAlergico.setSelectedIndex(2);
+            }
+        }
+
+        if (mascota.getAtencionEspecial().equalsIgnoreCase("SI")) {
+            cbxAtencion.setSelectedIndex(1);
+        } else {
+            if (mascota.getAtencionEspecial().equalsIgnoreCase("NO")) {
+                cbxAtencion.setSelectedIndex(2);
+            }
+        }
+    }
+
+    private void mostrarMensaje(String mensaje, String tipo, String titulo) {
+        JOptionPane OptionPane = new JOptionPane(mensaje);
+        if (tipo.equals("info")) {
+            OptionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        } else if (tipo.equals("error")) {
+            OptionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = OptionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
 }

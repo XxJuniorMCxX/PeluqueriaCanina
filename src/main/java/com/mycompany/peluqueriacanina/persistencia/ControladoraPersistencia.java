@@ -16,8 +16,10 @@ import java.util.logging.Logger;
  * @author DREP
  */
 public class ControladoraPersistencia {
+
     DuenioJpaController duenioJPA = new DuenioJpaController();
     MascotaJpaController mascotaJPA = new MascotaJpaController();
+    
 
     public void guardar(Duenio duenio, Mascota mascota) {
         //Crear en la BD el Dueño
@@ -38,6 +40,30 @@ public class ControladoraPersistencia {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public Mascota traerMascota(int num_cliente) {
+        return mascotaJPA.findMascota(num_cliente);
+    }
+
+    public Duenio traerDuenio(int id_Dueno) {
+        return duenioJPA.findDuenio(id_Dueno);
+    }
+
+    public void modificarDuenio(Duenio duenio) {
+        try {
+            duenioJPA.edit(duenio);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public  void modificarMascota(Mascota mascota) {
+        try {
+            mascotaJPA.edit(mascota);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     
     
 }

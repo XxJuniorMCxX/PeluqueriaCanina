@@ -18,13 +18,18 @@ import javax.swing.table.DefaultTableModel;
 public class VerDatos extends javax.swing.JFrame {
 
     public static PeluqueriaPrincipal retornarPrincipal = new PeluqueriaPrincipal();
-    Controladora controlLogica = new Controladora();
+    public  ModificarDatos modificarDatos;
+    Controladora controlLogica =null;
+   
+    
 
     /**
      * Creates new form VerDatos
      */
     public VerDatos() {
         initComponents();
+        controlLogica=new Controladora();
+      
     }
 
     /**
@@ -79,6 +84,11 @@ public class VerDatos extends javax.swing.JFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnRetornar.setText("Retornar");
         btnRetornar.addActionListener(new java.awt.event.ActionListener() {
@@ -208,6 +218,28 @@ public class VerDatos extends javax.swing.JFrame {
             mostrarMensaje("No hay Nada Para Eliminar", "error", "Error Al Eliminar");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // Controlo que la tabla no este vacia
+         if (tablaMascota.getRowCount() > 0) {
+            //controlo que se haya seleccionado a una mascota
+            if (tablaMascota.getSelectedRow() != -1) {
+                 //obtengo el id de la mascota a editar
+                int num_cliente = Integer.parseInt(String.valueOf(tablaMascota.getValueAt(tablaMascota.getSelectedRow(), 0)));
+                modificarDatos = new ModificarDatos(num_cliente);
+                modificarDatos.setVisible(true);
+                modificarDatos.setLocationRelativeTo(null);
+                this.dispose();
+          } else {
+                //
+                mostrarMensaje("No Selecciono Ninguna Mascota", "error", "Error Al Eliminar");
+            }
+        } else {
+            mostrarMensaje("No hay Nada Para Eliminar", "error", "Error Al Eliminar");
+        }
+ 
+            
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
